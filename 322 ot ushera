@@ -1,0 +1,67 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+
+namespace newFile
+{
+    [Serializable]
+    public class User
+    {
+       public string login;
+       public string password;
+
+       public User()
+        {
+
+        }
+
+        
+    }
+
+    class Program
+    {
+        static XmlSerializer xs = new XmlSerializer(typeof(List<User>));
+        static void Main(string[] args)
+        {
+            Console.Write("1. registration    2.authorization");
+            int n = int.Parse(Console.ReadLine());
+            if (n == 1) regis();
+            if (n == 2) author();
+        }
+        static void regis()
+        {
+            User u = new User();
+            Console.Write("Create new login: ");
+            u.login = Console.ReadLine();
+            Console.Write("Create your password: ");
+            u.password = Console.ReadLine();
+            List<User> users = new List<User>();
+            FileStream fs = new FileStream("Users.txt", FileMode.OpenOrCreate, FileAccess.Write); 
+            users.Add(u);
+            xs.Serialize(fs, users);
+            fs.Close();
+        }
+
+        static void author()
+        {
+            Console.Write("Create new login: ");
+            string l = Console.ReadLine();
+            Console.Write("Create your password: ");
+            string p = Console.ReadLine();
+            FileStream fs = new FileStream("Users.txt", FileMode.OpenOrCreate, FileAccess.Read);
+            List<User> users = xs.Deserialize(fs) as List<User>;
+            bool isIn = false;
+            foreach (var u in users)
+            {
+                if (l == u.login && p == u.password) { Console.WriteLine("welcome!"); break; isIn = true; }
+            }
+            if (!isIn) Console.WriteLine("Incorrec login or password!");
+            fs.Close();
+        }
+
+    }
+}
