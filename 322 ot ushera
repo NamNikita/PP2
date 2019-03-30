@@ -57,7 +57,7 @@ namespace newFile
             bool isIn = false;
             foreach (var u in users)
             {
-                if (l == u.login && p == u.password) { Console.WriteLine("welcome!"); break; isIn = true; }
+                if (l == u.login && p == u.password) { Console.WriteLine("welcome!"); isIn = true;break; }
             }
             if (!isIn) Console.WriteLine("Incorrec login or password!");
             fs.Close();
