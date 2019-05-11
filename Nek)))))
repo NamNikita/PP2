@@ -1,0 +1,8 @@
+SELECT * FROM Suppliers
+WHERE Country = 'UK' AND Fax NOT NULL;
+
+SELECT CompanyName, City, Country FROM Suppliers
+WHERE ContactName LIKE 'A%';
+
+SELECT ProductName FROM Products
+WHERE UnitPrice > (SELECT AVG(UnitPrice) FROM Products) AND UnitPrice <(SELECT (SUM(UnitPrice)/50) FROM Products);
