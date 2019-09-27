@@ -1,0 +1,68 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+struct mystack{
+	private:
+		int a[10];
+	    int last;
+	    int first;
+		int c;
+
+ 
+   public:
+   mystack()
+   {
+      
+       last = 0;
+       first = 0;
+   }
+     
+     void push(int x)
+	 {
+         a[last] = x;
+         last++;
+         cout << "ok" << endl;
+     }
+     
+     int pop()
+	 {
+      int res = a[first];
+            first--;
+            return res;
+     }    
+     
+     void isEmpty()
+	 {
+     	if (first < 0)
+		 {
+     	cout << "Empty" << endl;
+		 }
+     	else
+     	{
+     	cout << "Not Empty" << endl;
+        }
+	 }
+	 
+	 
+      void back()
+	  {
+	  	int c = a[first];
+      	cout << c;
+	  }
+         
+      };   
+   
+       int main(){
+       	mystack s;
+       	s.push(5);
+       	s.push(2);
+       	s.push(9);
+       	s.pop();
+       	s.pop();
+        s.isEmpty();
+        s.back();
+       	
+       	return 0;
+    
+	   }
