@@ -1,0 +1,134 @@
+#include <iostream>
+
+using namespace std;
+
+class Node {
+    public:
+    int data;
+    Node *left, *right;
+
+    Node(int data) {
+        this->data = data;
+        left = NULL;
+        right = NULL;
+    }
+};
+
+class BST {
+    public:
+    Node *root;
+    BST() {
+        root = NULL;
+    }
+
+    Node *insert(Node *node, int data) {
+        if (node == NULL) {
+            node = new Node(data);
+            return node;
+        }
+        if (data <= node->data)
+            node->left = insert(node->left, data);
+        else 
+            node->right = insert(node->right, data);
+        return node;
+    }
+
+    void inOrder(Node *node) {
+        if (node == NULL)
+            return;
+        inOrder(node->left);
+        cout << node->data << " ";
+        inOrder(node->right);
+    }
+
+    Node *findMin(Node *node) {
+        while (node->left != NULL)
+            node = node->left;
+        return node;
+    }
+
+    Node *findMax(Node *node) {
+        while (node->right != NULL)
+            node = node->right;
+        return node;
+    }
+
+    int findLeafs(Node *node, int cnt){
+        if (node == NULL)
+            return 0;
+        if(node->right == NULL && node->left == NULL) {
+            cnt++; 
+            return cnt;
+        }
+        return findLeafs(node->left, cnt) + findLeafs(node->right, cnt);
+        
+    }
+
+    Node * find(Node *root, int x){
+    if(root == NULL) return NULL;
+    if(root->data == x) return root;
+    if(root->data > x) return find(root->left, x);
+    return find(root->right, x);
+}
+
+    int getSubtreeHeight(Node *node, int x){
+        Node *tmp = find(node, x);
+        return findHeight(tmp);
+    }
+
+    int findHeight(Node *node) {
+    if (node == NULL) {
+        return 0;
+    }
+
+    int lefth = findHeight(node->left);
+    int righth = findHeight(node->right);
+
+    if (lefth > righth) {
+        return lefth + 1;
+    } else {
+        return righth + 1;
+    }
+}
+
+    Node *delete_node(Node *node, int data) {
+        if (node == NULL)
+            return NULL;
+        if (data < node->data) 
+            node->left = delete_node(node->left, data);
+        else if (data > node->data)
+            node->right = delete_node(node->right, data);
+        else {
+            if (node->right == NULL && node->left == NULL)
+                node = NULL;
+            else if (node->left == NULL)
+                node = node->right;
+            else if (node->right == NULL)
+                node = node->left;
+            else {
+                Node *tmp = findMin(node->right);
+                node->data = tmp->data;
+                node->right = delete_node(node->right, tmp->data);
+            }
+        }
+        return node;
+    }
+};
+
+int main() {
+    BST *bst = new BST();
+    int n;
+    cin >> n;
+    int a[n];
+    int x;
+    for(int i = 0; i < n; i++){
+        cin >> a[i];
+        bst->root = bst->insert(bst->root, a[i]);
+    }
+    cin >> x;
+    
+    cout << bst->getSubtreeHeight(bst->root, x);
+   
+
+    return 0;
+}
