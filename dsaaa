@@ -1,0 +1,34 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main(){
+
+    string s;
+    cin >> s;
+    string s1 = s.substr(0, (s.length()/2));
+    string s2 = s.substr(s.length()/2, s.length()-1);
+    reverse(s2.begin(), s2.end());
+    string s3 = "";
+    vector<char> vowels = vector<char>();
+    vowels.push_back('a');
+   vowels.push_back('e');
+   vowels.push_back('i');
+   vowels.push_back('o');
+   vowels.push_back('u');
+   vowels.push_back('y');
+
+    for(int i = 0; i < s1.length(); i++){
+        bool flag = false;
+        for(int j = 0; j < vowels.size(); j++)
+            if(tolower(s1[i]) == vowels[j]) {flag = true; break;}
+        if(!flag) s3 += s[i];
+    }
+    s3 += s2;
+    s3[0] = toupper(s3[0]
+    cout << s3 << endl;
+    return 0;
+}
