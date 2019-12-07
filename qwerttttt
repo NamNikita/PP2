@@ -1,0 +1,34 @@
+#include <iostream>
+#include <vector>
+#include <cmath>
+using namespace std;
+
+vector<int> prefix(string s) {
+    int n = s.size();
+    vector<int> a(n);
+    a[0] = 0;
+    for (int i = 1; i < n; i++) {
+        int j = a[i - 1];
+        while (j > 0 && s[i] != s[j]){
+            j = a[j - 1];
+        }
+        if (s[i] == s[j]){
+            j++;
+        }
+        a[i] = j;
+    }
+    return a;
+}
+
+int main() {
+    int a, b;
+    string s1, s2;
+    cin >> s1 >> s2;
+    string str = s1 + "#" + s2;
+    vector<int> a = prefix(str);
+    a = a[a.size() - 1];
+    str = s2 + "#" + s1;
+    a = prefix(str);
+    b = a[a.size() - 1];
+    int n = max(a,b);
+}
