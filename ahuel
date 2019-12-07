@@ -1,0 +1,32 @@
+#include <iostream>
+using namespace std;
+
+int main(){
+
+    int n, x;
+    cin >> n >> x;
+    int arr[n];
+    int max = -1;
+    long long res = 0;
+    for(int i = 0; i < n; i++){
+        cin >> arr[i];
+        if(arr[i] > max) max = arr[i];
+    }
+
+    while(x!=0){
+        for(int i = 0; i < n; i++){
+            if(x == 0) break;
+            if(arr[i] == max){
+                res += arr[i];
+                arr[i] -= 1;
+                x--;
+            }
+        }
+        max -= 1;
+    }
+
+    
+    cout << res;
+
+    return 0;
+}
